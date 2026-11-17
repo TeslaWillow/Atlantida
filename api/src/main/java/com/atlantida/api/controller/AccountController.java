@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*") // Allow only from the frontend's origin
+@CrossOrigin(origins = "http://localhost:5173") // Allow only from the frontend's origin
 public class AccountController {
 
     private final AccountService accountService;
