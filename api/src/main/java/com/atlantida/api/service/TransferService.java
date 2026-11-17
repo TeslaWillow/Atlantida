@@ -30,11 +30,11 @@ public class TransferService {
             throw new InvalidTransferException("La cuenta de origen y destino no pueden ser la misma.");
         }
 
-        // 2. Search for both accounts in the database
-        Account sourceAccount = accountRepository.findById(request.getSourceAccountId())
+        // 2. Search for both accounts in the database (with locking to prevent concurrent modifications)
+        Account sourceAccount = accountRepository.findByIdWithLock(request.getSourceAccountId())
                 .orElseThrow(() -> new ResourceNotFoundException("La cuenta de origen con ID " + request.getSourceAccountId() + " no existe."));
 
-        Account destinationAccount = accountRepository.findById(request.getDestinationAccountId())
+        Account destinationAccount = accountRepository.findByIdWithLock(request.getDestinationAccountId())
                 .orElseThrow(() -> new ResourceNotFoundException("La cuenta de destino con ID " + request.getDestinationAccountId() + " no existe."));
 
         // Save previous balances for response
